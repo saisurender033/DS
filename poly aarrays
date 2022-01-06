@@ -1,0 +1,110 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct polynomial
+{
+        int hp;
+        int coeff[50];
+};
+int max(int a,int b)
+{
+        return (a>b)?a:b;
+}
+typedef struct polynomial poly;
+void display(poly*p);
+poly* create()
+{
+        poly *p;
+        int i;
+        p=(poly*)malloc(sizeof(poly));
+        printf("enter the high power of polynomial\n");
+        scanf("%d",&p->hp);
+        for(i=p->hp;i>=0;i--)
+        {
+                printf("enter the coeffient of exponent %d\n",i);
+                scanf("%d",&p->coeff[i]);
+        }
+        return p;
+}
+poly*add(poly*p1,poly*p2)
+{
+        poly*p3;
+        p3->hp=max(p1->hp,p2->hp);
+                                                                                             1,1           Top
+
+        for (i=p3->hp;i>=0;i--)
+        {
+                p3->coeff[i]=p1->coeff[i]+p2->coeff[i];
+        }
+        return p3;
+}
+poly*sub(poly*p1,poly*p2)
+{
+        poly*p3;
+        int i;
+        p3=(poly*)malloc(sizeof(poly));
+        p3->hp=max(p1->hp,p2->hp);
+        for (i=p3->hp;i>=0;i--)
+        {
+                p3->coeff[i]=p1->coeff[i]-p2->coeff[i];
+        }
+        return p3;
+}
+poly*mull(poly*p1,poly*p2)
+{
+        poly*p3;
+        int i;
+        int j;
+        p3=(poly*)malloc(sizeof(poly));
+        p3->hp=p1->hp+p2->hp;
+        for(i=p1->hp;i>=0;i--)
+        {
+                for(j=p2->hp;j>=0;j--)
+                {
+                        p3->coeff[i+j]=p3->coeff[i+j]+p1->coeff[i]*p2->coeff[j];
+                }
+        }
+}
+int main()
+{
+        int x;
+        poly*p1;
+        poly*p2;
+        poly*p3;
+        printf("create first polynomial \n:");
+        p1=create();
+        printf(" create second polynomial \n:");
+        p2=create();
+        while(1)
+        {
+                printf("\n 1.add \n 2.sub \n 3.mull \n 4.exit");
+                printf("enter your choice \n");
+                scanf("%d",&x);
+                switch(x)
+                {
+                        case 1: p3=add(p1,p2);
+                                printf("the result of addition is \n");
+                                display(p3);
+                                break;
+                        case 2: p3=sub(p1,p2);
+                                printf("the result of subtraction is \n");
+                                display(p3);
+                                break;
+                        case 3: p3=mull(p1,p2);
+                                printf("the result of multiplication is \n");
+                                display(p3);
+                                break;
+                        case 4: exit(0);
+
+                        default :
+                                printf("\n enter choice correctly");
+                }
+        }
+}
+void display(poly*p)
+{
+        int i;
+        for(i=p->hp;i>=0;i--)
+        {
+                printf("%dx^%d+",p->coeff[i],i);
+        }
+}
