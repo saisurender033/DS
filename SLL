@@ -167,7 +167,7 @@ void sort(node *first)
                 temp2->data=new->data;
             }
         }
-    }
+    
 }
 node *reverse(node*first)
 {
